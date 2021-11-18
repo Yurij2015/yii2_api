@@ -1,6 +1,11 @@
 <?php
+
+use app\models\User;
+use yii\rest\UrlRule;
+use yii\web\JsonParser;
+
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/test_db.php';
+$db = require __DIR__ . '/db_seed.php';
 
 /**
  * Application configuration shared by all test types
@@ -22,14 +27,24 @@ return [
             'basePath' => __DIR__ . '/../web/assets',
         ],
         'urlManager' => [
-            'showScriptName' => true,
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                ['class' => UrlRule::class, 'controller' => 'user'],
+                ['class' => UrlRule::class, 'controller' => 'album'],
+                ['class' => UrlRule::class, 'controller' => 'photo'],
+            ],
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => User::class,
         ],
         'request' => [
             'cookieValidationKey' => 'test',
             'enableCsrfValidation' => false,
+            'parsers' => [
+                'application/json' => JsonParser::class,
+            ],
             // but if you absolutely need it set cookie domain to localhost
             /*
             'csrfCookie' => [

@@ -63,6 +63,7 @@ $config = [
                 ['class' => UrlRule::class, 'controller' => 'user'],
                 ['class' => UrlRule::class, 'controller' => 'album'],
                 ['class' => UrlRule::class, 'controller' => 'photo'],
+                'GET users' => 'users',
             ],
         ],
 
