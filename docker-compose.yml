@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  webserver_yii2_api:
+    image: yiisoftware/yii2-php:7.4-apache
+    volumes:
+      - ${PROJECT_ROOT}/server/:/app:delegated
+    ports:
+      - '80:80'
+    networks:
+      - backend
+    depends_on:
+      - mysql_yii2_api
+    container_name: webserver_yii2_api
+  mysql_yii2_api:
+    image: mysql:${MYSQL_VERSION}
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_yii2_api
+    networks:
+      - backend
+    container_name: mysql_yii2_api
+  phpmyadmin_yii2_api:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_yii2_api
+    ports:
+      - "2323:80"
+    links:
+      - mysql_yii2_api:db
+    networks:
+      - backend
+networks:
+  backend:
+volumes:
+  data:
