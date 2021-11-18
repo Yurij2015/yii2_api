@@ -1,1 +1,1 @@
-<h2 align="center">Url Shorter with Yii2</h2>
+<h2 align="center">Yii2API</h2>
